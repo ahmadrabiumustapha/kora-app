@@ -1,4 +1,10 @@
 target/
 Cargo.lock
+
+# Test snapshots
 test_snapshots/
+**/*.snap
+**/*.snap.new
+
+# JSON build artefacts
 *.json

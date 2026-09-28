@@ -1,9 +1,39 @@
-target
-.snfoundry_cache/
+# Build artifacts
+target/
 stellar-contracts/target/
+
+# Cargo lockfile (workspace root — keep stellar-contracts/Cargo.lock in sub-crate)
 stellar-contracts/Cargo.lock
-test_snapshots/test/test
-ISSUES.md
-node_modules
+
+# Test snapshots (proptest, insta, etc.)
+test_snapshots/
+**/*.snap
+**/*.snap.new
+PROPTEST_MEDICAL_RECORDS.md
+
+# Foundry / Starknet cache
+.snfoundry_cache/
+
+# Node / Hardhat
+node_modules/
+celo-contracts/node_modules/
+
+# Environment secrets
 .env
+.env.*
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Temporary / personal scratch files
 somzilla.md
+ISSUES.md
+
+# IDE
+.idea/
+.vscode/
+*.iml
