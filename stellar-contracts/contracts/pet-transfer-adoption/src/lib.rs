@@ -649,6 +649,19 @@ impl PetOwnershipContract {
         {
             panic_with_error!(&env, ContractError::TransferAlreadyPending);
         }
+        // Also block if an AdoptionRecord exists in a non-terminal state (Signed),
+        // which covers the case where an adoption has been fully approved but not
+        // yet finalized — PendingAdoption may have been removed but the in-progress
+        // record remains. (Issue #127)
+        if let Some(existing_record) = env
+            .storage()
+            .persistent()
+            .get::<DataKey, AdoptionRecord>(&DataKey::AdoptionRecord(pet_id))
+        {
+            if existing_record.state == AdoptionState::Signed {
+                panic_with_error!(&env, ContractError::TransferAlreadyPending);
+            }
+        }
         if env
             .storage()
             .persistent()
