@@ -753,6 +753,10 @@ impl PetOwnershipContract {
     /// custom cancellation timeout in days. If the transfer is not accepted
     /// within this window, [`cancel_expired_transfer`] becomes callable by
     /// the original owner or any third party.
+    ///
+    /// # Errors
+    /// - [`ContractError::InvalidTimeoutDays`] — `transfer_timeout_days` must be ≥ 1;
+    ///   a zero value would cause the transfer to expire instantly upon creation.
     pub fn initiate_transfer_with_timeout(
         env: Env,
         pet_id: u64,
