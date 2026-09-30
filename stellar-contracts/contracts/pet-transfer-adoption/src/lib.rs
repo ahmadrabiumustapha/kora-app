@@ -984,6 +984,8 @@ impl PetOwnershipContract {
     /// Allow a multisig admin to waive the waiting period for a specific adoption.
     pub fn waive_waiting_period(env: Env, pet_id: u64, admin: Address, reason: String) {
         admin.require_auth();
+        // Verify the caller is a registered multisig admin. (Issue #128)
+        require_trusted_multisig_admin(&env, &admin);
         let pending: PendingAdoption = env
             .storage()
             .persistent()
